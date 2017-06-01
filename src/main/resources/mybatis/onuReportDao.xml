@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bow.dao.OnuReportDao">
+
+
+    <insert id="batchInsert" parameterType="list">
+
+        INSERT INTO shiro.report_onu
+        ( id,emsId,neId,boardId,portNo,onuId,onuPonPortNo,
+        emsName,areaName,neName,neIp,boardName,onuName,
+        pmValue301,pmValue302,pmValue303,pmValue304,pmValue305 )
+        VALUES
+        <foreach collection="list" item="e" separator=",">
+            (
+            #{e.id,jdbcType=VARCHAR},
+            #{e.emsId,jdbcType=INTEGER},
+            #{e.neId,jdbcType=INTEGER},
+            #{e.boardId,jdbcType=INTEGER},
+            #{e.portNo,jdbcType=INTEGER},
+            #{e.onuId,jdbcType=INTEGER},
+            #{e.onuPonPortNo,jdbcType=INTEGER},
+
+            #{e.emsName,jdbcType=VARCHAR},
+            #{e.areaName,jdbcType=VARCHAR},
+            #{e.neName,jdbcType=VARCHAR},
+            #{e.neIp,jdbcType=VARCHAR},
+            #{e.boardName,jdbcType=VARCHAR},
+            #{e.onuName,jdbcType=VARCHAR},
+
+            #{e.pmValue301,jdbcType=DOUBLE},
+            #{e.pmValue302,jdbcType=DOUBLE},
+            #{e.pmValue303,jdbcType=DOUBLE},
+            #{e.pmValue304,jdbcType=DOUBLE},
+            #{e.pmValue305,jdbcType=DOUBLE}
+            )
+        </foreach>
+    </insert>
+
+
+</mapper>

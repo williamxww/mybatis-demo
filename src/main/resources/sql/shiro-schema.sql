@@ -1,67 +1,135 @@
-drop database if exists `shiro`;
-create database `shiro` default character set utf8 collate utf8_general_ci;;
-use `shiro`;
+DROP DATABASE IF EXISTS `shiro`;
+CREATE DATABASE `shiro`
+  DEFAULT CHARACTER SET utf8
+  COLLATE utf8_general_ci;
+;
+USE `shiro`;
 
 
-drop table if exists sys_user;
-create table sys_user (
-  id bigint auto_increment,
-  organization_id bigint,
-  username varchar(100),
-  password varchar(100),
-  salt varchar(100),
-  role_ids varchar(100),
-  locked bool default false,
-  constraint pk_sys_user primary key(id)
-) charset=utf8 ENGINE=InnoDB;
-create unique index idx_sys_user_username on sys_user(username);
-create index idx_sys_user_organization_id on sys_user(organization_id);
+DROP TABLE IF EXISTS sys_user;
+CREATE TABLE sys_user (
+  id              BIGINT AUTO_INCREMENT,
+  organization_id BIGINT,
+  username        VARCHAR(100),
+  password        VARCHAR(100),
+  salt            VARCHAR(100),
+  role_ids        VARCHAR(100),
+  locked          BOOL   DEFAULT FALSE,
+  CONSTRAINT pk_sys_user PRIMARY KEY (id)
+)
+  CHARSET = utf8
+  ENGINE = InnoDB;
+CREATE UNIQUE INDEX idx_sys_user_username
+  ON sys_user (username);
+CREATE INDEX idx_sys_user_organization_id
+  ON sys_user (organization_id);
 
 
-drop table if exists sys_organization;
-create table sys_organization (
-  id bigint auto_increment,
-  name varchar(100),
-  parent_id bigint,
-  parent_ids varchar(100),
-  available bool default false,
-  constraint pk_sys_organization primary key(id)
-) charset=utf8 ENGINE=InnoDB;
-create index idx_sys_organization_parent_id on sys_organization(parent_id);
-create index idx_sys_organization_parent_ids on sys_organization(parent_ids);
+DROP TABLE IF EXISTS sys_organization;
+CREATE TABLE sys_organization (
+  id         BIGINT AUTO_INCREMENT,
+  name       VARCHAR(100),
+  parent_id  BIGINT,
+  parent_ids VARCHAR(100),
+  available  BOOL   DEFAULT FALSE,
+  CONSTRAINT pk_sys_organization PRIMARY KEY (id)
+)
+  CHARSET = utf8
+  ENGINE = InnoDB;
+CREATE INDEX idx_sys_organization_parent_id
+  ON sys_organization (parent_id);
+CREATE INDEX idx_sys_organization_parent_ids
+  ON sys_organization (parent_ids);
 
 
-drop table if exists sys_resource;
-create table sys_resource (
-  id bigint auto_increment,
-  name varchar(100),
-  type varchar(50),
-  url varchar(200),
-  parent_id bigint,
-  parent_ids varchar(100),
-  permission varchar(100),
-  available bool default false,
-  constraint pk_sys_resource primary key(id)
-) charset=utf8 ENGINE=InnoDB;
-create index idx_sys_resource_parent_id on sys_resource(parent_id);
-create index idx_sys_resource_parent_ids on sys_resource(parent_ids);
+DROP TABLE IF EXISTS sys_resource;
+CREATE TABLE sys_resource (
+  id         BIGINT AUTO_INCREMENT,
+  name       VARCHAR(100),
+  type       VARCHAR(50),
+  url        VARCHAR(200),
+  parent_id  BIGINT,
+  parent_ids VARCHAR(100),
+  permission VARCHAR(100),
+  available  BOOL   DEFAULT FALSE,
+  CONSTRAINT pk_sys_resource PRIMARY KEY (id)
+)
+  CHARSET = utf8
+  ENGINE = InnoDB;
+CREATE INDEX idx_sys_resource_parent_id
+  ON sys_resource (parent_id);
+CREATE INDEX idx_sys_resource_parent_ids
+  ON sys_resource (parent_ids);
 
 
-drop table if exists sys_role;
-create table sys_role (
-  id bigint auto_increment,
-  role varchar(100),
-  description varchar(100),
-  resource_ids varchar(100),
-  available bool default false,
-  constraint pk_sys_role primary key(id)
-) charset=utf8 ENGINE=InnoDB;
-create index idx_sys_role_resource_ids on sys_role(resource_ids);
+DROP TABLE IF EXISTS sys_role;
+CREATE TABLE sys_role (
+  id           BIGINT AUTO_INCREMENT,
+  role         VARCHAR(100),
+  description  VARCHAR(100),
+  resource_ids VARCHAR(100),
+  available    BOOL   DEFAULT FALSE,
+  CONSTRAINT pk_sys_role PRIMARY KEY (id)
+)
+  CHARSET = utf8
+  ENGINE = InnoDB;
+CREATE INDEX idx_sys_role_resource_ids
+  ON sys_role (resource_ids);
 
 
-drop table if exists sessions;
-create table sessions (
-  id varchar(200),
-  session varchar(2000),
-  constraint pk_sessions primary key(id)
-) charset=utf8 ENGINE=InnoDB;
+DROP TABLE IF EXISTS sessions;
+CREATE TABLE sessions (
+  id      VARCHAR(200),
+  session VARCHAR(2000),
+  CONSTRAINT pk_sessions PRIMARY KEY (id)
+)
+  CHARSET = utf8
+  ENGINE = InnoDB;
+
+
+DROP TABLE IF EXISTS REPORT_ONU;
+CREATE TABLE REPORT_ONU (
+  id           VARCHAR(100),
+  EMSID        INT,
+  NEID         INT,
+  boardId      INT,
+  portNo       INT,
+  onuId        INT,
+  onuPonPortNo INT,
+  emsName      VARCHAR(300),
+  areaName     VARCHAR(300),
+  neName       VARCHAR(300),
+  neIp         VARCHAR(300),
+  boardName    VARCHAR(300),
+  onuName      VARCHAR(300),
+  pmValue301   DOUBLE,
+  pmValue302   DOUBLE,
+  pmValue303   DOUBLE,
+  pmValue304   DOUBLE,
+  pmValue305   DOUBLE
+)
+  CHARSET = UTF8
+  ENGINE = INNODB;
+
+alter table REPORT_ONU add constraint FOR_NEID foreign key(NEID) references REPORT_NE(NEID);
+
+
+DROP TABLE IF EXISTS REPORT_NE;
+CREATE TABLE REPORT_NE (
+  id           VARCHAR(100),
+  EMSID        INT,
+  NEID         INT,
+  emsName      VARCHAR(300),
+  areaName     VARCHAR(300),
+  neName       VARCHAR(300),
+  neIp         VARCHAR(300),
+  pmValue101   DOUBLE,
+  pmValue102   DOUBLE,
+  pmValue103   DOUBLE,
+  pmValue104   DOUBLE,
+  pmValue105   DOUBLE
+)
+  CHARSET = UTF8
+  ENGINE = INNODB;
+ALTER TABLE `REPORT_NE` ADD INDEX index_NEID ( `NEID` )
+

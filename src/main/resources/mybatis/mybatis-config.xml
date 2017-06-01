@@ -25,15 +25,17 @@
         <package name="com.bow.entity"/>
     </typeAliases>
 
-    <plugins>
-        <!-- 分页的拦截器 -->
-        <plugin interceptor="com.bow.common.interceptor.PageHelper"/>
-    </plugins>
+    <!--<plugins>-->
+        <!--&lt;!&ndash; 分页的拦截器 &ndash;&gt;-->
+        <!--<plugin interceptor="com.bow.common.interceptor.PageHelper"/>-->
+    <!--</plugins>-->
 
 
     <!-- configuration location -->
     <mappers>
         <mapper resource="mybatis/userDao.xml"/>
+        <mapper resource="mybatis/onuReportDao.xml"/>
+        <mapper resource="mybatis/neReportDao.xml"/>
     </mappers>
 
 

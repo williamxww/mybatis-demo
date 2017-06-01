@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bow.dao.NeReportDao">
+
+
+    <insert id="batchInsert" parameterType="list">
+
+        INSERT INTO shiro.report_ne
+        ( id,emsId,neId,
+        emsName,areaName,neName,neIp,
+        pmValue101,pmValue102,pmValue103,pmValue104,pmValue105 )
+        VALUES
+        <foreach collection="list" item="e" separator=",">
+            (
+            #{e.id,jdbcType=VARCHAR},
+            #{e.emsId,jdbcType=INTEGER},
+            #{e.neId,jdbcType=INTEGER},
+
+            #{e.emsName,jdbcType=VARCHAR},
+            #{e.areaName,jdbcType=VARCHAR},
+            #{e.neName,jdbcType=VARCHAR},
+            #{e.neIp,jdbcType=VARCHAR},
+
+            #{e.pmValue101,jdbcType=DOUBLE},
+            #{e.pmValue102,jdbcType=DOUBLE},
+            #{e.pmValue103,jdbcType=DOUBLE},
+            #{e.pmValue104,jdbcType=DOUBLE},
+            #{e.pmValue105,jdbcType=DOUBLE}
+            )
+        </foreach>
+    </insert>
+
+
+</mapper>
