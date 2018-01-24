@@ -1,8 +1,6 @@
 package com.bow.entity;
 
-import java.util.List;
-
-import org.springframework.util.CollectionUtils;
+import java.util.Date;
 
 /**
  * @author ViVi
@@ -12,126 +10,71 @@ public class User {
 
     private Long id;
 
-    private Long organizationId; // 所属公司
-
-    // 默认的为employeeCode;
     private String username;
 
     private String password;
 
     private String salt;
 
-    private List<Long> roleIds; // 拥有的角色列表
+    private String email;
 
-    private Boolean locked = Boolean.FALSE;
+    private int status;
 
-    public User() {
+    private Date createTime;
 
-    }
-
-    public User(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
-
-    /**
-     * @return the id
-     */
     public Long getId() {
         return id;
     }
 
-    /**
-     * @param id
-     *            the id to set
-     */
     public void setId(Long id) {
         this.id = id;
     }
 
-    /**
-     * @return the username
-     */
     public String getUsername() {
         return username;
     }
 
-    /**
-     * @param username
-     *            the username to set
-     */
     public void setUsername(String username) {
         this.username = username;
     }
 
-    /**
-     * @return the password
-     */
     public String getPassword() {
         return password;
     }
 
-    /**
-     * @param password
-     *            the password to set
-     */
     public void setPassword(String password) {
         this.password = password;
     }
 
-    /**
-     * @return the salt
-     */
     public String getSalt() {
         return salt;
     }
 
-    /**
-     * @param salt
-     *            the salt to set
-     */
     public void setSalt(String salt) {
         this.salt = salt;
     }
 
-    public List<Long> getRoleIds() {
-        return roleIds;
+    public String getEmail() {
+        return email;
     }
 
-    public void setRoleIds(List<Long> roleIds) {
-        this.roleIds = roleIds;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public Boolean getLocked() {
-        return locked;
+    public int getStatus() {
+        return status;
     }
 
-    public void setLocked(Boolean locked) {
-        this.locked = locked;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
-
-    public String getCredentialsSalt() {
-        return username + salt;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public Long getOrganizationId() {
-        return organizationId;
-    }
-
-    public void setOrganizationId(Long organizationId) {
-        this.organizationId = organizationId;
-    }
-
-    public String getRoleIdsStr() {
-        if (CollectionUtils.isEmpty(roleIds)) {
-            return "";
-        }
-        StringBuilder s = new StringBuilder();
-        for (Long roleId : roleIds) {
-            s.append(roleId);
-            s.append(",");
-        }
-        return s.toString();
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }

@@ -5,50 +5,52 @@
 <mapper namespace="com.bow.dao.UserDao">
 
     <select id="getUser" parameterType="long" resultType="user">
-        select id,organization_id, username, password,salt, role_ids, locked
-        from shiro.sys_user
+        select id,username,password,salt,email,createTime
+        from `user`
 		where id = #{id}
 	</select>
 
     <select id="getUserByName" resultType="user">
-        select id,organization_id, username, password,salt, role_ids, locked
-        from shiro.sys_user
+        select id,username,password,salt,email,createTime
+        from `user`
         where username = #{0}
     </select>
 
     <insert id="addUser" parameterType="user" useGeneratedKeys="true" keyProperty="id">
-        insert into sys_user
-        ( username, password, salt, locked)
+        insert into `user`
+        ( username,password,salt,email,createTime)
         values
         (
         #{username},
         #{password},
         #{salt,jdbcType=VARCHAR},
-        #{locked,jdbcType=NUMERIC}
+        #{email,jdbcType=VARCHAR},
+        #{createTime,jdbcType=DATE}
         )
     </insert>
 
     <delete id="deleteUser" parameterType="long">
-		delete from sys_user where id=#{userId}
+		delete from `user` where id=#{userId}
 	</delete>
 
     <update id="updateUser">
-        update sys_user
+        update `user`
         <trim prefix="set" suffixOverrides=",">
             <if test="username != null ">username=#{username},</if>
             <if test="password != null ">password=#{password},</if>
-            <if test="locked != null ">locked=#{locked},</if>
             <if test="salt != null ">salt=#{salt},</if>
+            <if test="email != null ">email=#{email},</if>
+            <if test="createTime != null ">createTime=#{createTime},</if>
         </trim>
         where id=#{id}
     </update>
 
     <select id="getUsers" parameterType="user" resultType="user">
-        select id, username, password, salt, locked from sys_user
+        select id,username,password,salt,email,createTime from `user`
         <trim prefix="where" prefixOverrides="and">
             <if test="id != null ">and id=#{id}</if>
             <if test="username != null ">and username=#{username}</if>
-            <if test="locked != null ">and locked=#{locked}</if>
+            <if test="password != null ">and password=#{password}</if>
         </trim>
     </select>
 
@@ -57,20 +59,21 @@
             SELECT LAST_INSERT_ID()
         </selectKey>
 
-        insert into sys_user ( username, password, salt, locked)
+        insert into `user` ( id,username,password,salt,email,createTime)
         values
         <foreach collection="list" item="e" index="index" separator=",">
             (
             #{e.username,jdbcType=VARCHAR},
             #{e.password,jdbcType=VARCHAR},
-            #{e.salt,jdbcType=NUMERIC},
-            #{e.locked,jdbcType=NUMERIC}
+            #{e.salt,jdbcType=VARCHAR},
+            #{e.email,jdbcType=VARCHAR},
+            #{e.createTime,jdbcType=DATE}
             )
         </foreach>
     </insert>
 
     <delete id="deleteBatchUsers">
-        delete from sys_user where id in
+        delete from `user` where id in
         <foreach collection="list" item="u" index="index" open="(" separator="," close=")">
             #{u.id}
         </foreach>

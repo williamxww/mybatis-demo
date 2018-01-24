@@ -11,7 +11,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
 
 /**
  * @author vv
@@ -70,7 +69,6 @@ public class UserDaoTest {
         User user = new User();
         user.setId(3L);
         user.setUsername(null);
-        user.setLocked(null);
         boolean flag = false;
         try{
             dao.updateUser(user);
