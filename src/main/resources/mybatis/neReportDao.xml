@@ -7,7 +7,7 @@
 
     <insert id="batchInsert" parameterType="list">
 
-        INSERT INTO shiro.report_ne
+        INSERT INTO report_ne
         ( id,emsId,neId,
         emsName,areaName,neName,neIp,
         pmValue101,pmValue102,pmValue103,pmValue104,pmValue105 )
